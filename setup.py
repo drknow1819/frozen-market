@@ -1,10 +1,10 @@
-from sqlalchemy import Column,Integer,String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy import create_engine
-#from passlib.apps import custom_app_context as pwd_context
-import random, string
-#from itsdangerous import(TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
+import random
+import string
+
 
 Base = declarative_base()
 
@@ -18,12 +18,13 @@ class User(Base):
 
     @property
     def serialize(self):
-       """Return object data in easily serializeable format"""
-       return {
-           'name'         : self.name,
-           'id'           : self.id,
-           'email'        : self.email,
-       }
+        """Return object data in easily serializeable format"""
+        return {
+            'name': self.name,
+            'id': self.id,
+            'email': self.email,
+        }
+
 
 class Category(Base):
     __tablename__ = 'category'
@@ -37,15 +38,14 @@ class Category(Base):
     def serialize(self):
         """Return object data in easily serializeable format"""
         return {
-        'id' : self.id,
-        'name' : self.name,
-        'description' : self.description,
-        'user_id': self.user_id
-            }
+            'id': self.id,
+            'name': self.name,
+            'description': self.description,
+            'user_id': self.user_id
+        }
 
 
 class Item(Base):
-
     __tablename__ = 'item'
 
     name = Column(String(80), nullable=False)
@@ -62,18 +62,16 @@ class Item(Base):
     def serialize(self):
         """Return object data in easily serializeable format"""
         return {
-        'id' : self.id,
-        'name' : self.name,
-        'nutrients' : self.nutrients,
-        'price' : self.price,
-        'weight' : self.weight,
-        'category_id' : self.category_id
-            }
-
+            'id': self.id,
+            'name': self.name,
+            'nutrients': self.nutrients,
+            'price': self.price,
+            'weight': self.weight,
+            'category_id': self.category_id,
+            'user_id': self.user_id
+        }
 
 
 engine = create_engine('sqlite:///frozenmarket.db')
- 
 
 Base.metadata.create_all(engine)
-    
